@@ -15,9 +15,7 @@ import traceback
 import os
 
 ''' log '''
-script_name = sys.argv[0]
-file_list_getcwd = pm.read_file_list(os.getcwd())
-script_abs_path = [x for x in file_list_getcwd if x.endswith(script_name)][0].rsplit('/', maxsplit = 1)[0].rsplit('\\', maxsplit = 1)[0]
+script_abs_path, script_name = os.path.split(__file__)
 
 pm.create_dir(os.path.join(script_abs_path, 'logs'))
 
