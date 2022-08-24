@@ -1,6 +1,10 @@
 import logging
 import os
 import traceback
+import platform
+import sys
+import shutil
+import pandas as pd
 
 # logger
 def log(msg):
@@ -22,11 +26,18 @@ def script_start():
     log('@@@@                                                                                  @@@@')
     log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
     log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
+    log('==========================================================================================')
+    log('#### OS              : {}'.format(platform.platform()))
+    log('#### Python Version  : {}'.format(sys.version))
+    log('#### Process ID(PID) : {}'.format(os.getpid()))
+    log('==========================================================================================')
 
-# file reader as list with full path
+''' file & directory controller '''
+
+# file reader as list output full path
 def read_file_list(path):
     try:
-        log('#### Read Path {}'.format(path))
+        log('#### Read Path \'{}\''.format(path))
         file_list = list([])
         
         for dir_path, _, file_name in os.walk(path):
@@ -35,21 +46,126 @@ def read_file_list(path):
                     file_list.append(os.path.abspath(os.path.join(dir_path, f)))
                 except:
                     log('######## Read File \'{}\' Error'.format(file_name))
-                    log('######## {}'.format(traceback.format_exc()))
-                
+                    log(traceback.format_exc())
+
+        log('############ Path \'{}\' File Count : {}'.format(path, len(file_list)))
         return file_list
     except:
-        log('######## Read File List Error')
-        log('######## {}'.format(traceback.format_exc()))
-
+        log('############ Read Path \'{}\' Error'.format(path))
+        log(traceback.format_exc())
+        
 # directory creater
 def create_dir(path):
     try:
-        log('#### Create Directory')
         if not os.path.exists(path):
+            log('#### Create Directory \'{}\''.format(path))
             os.makedirs(path)
         else:
-            log('######## Directory \'{}\' Already Exist'.format(path))
+            log('#### Directory \'{}\' Already Exist'.format(path))
     except:
-        log('######## Create Directory \'{}\' Error'.format(path))
+        log('############ Create Directory \'{}\' Error'.format(path))
         log(traceback.format_exc())
+        
+# file copier
+def copy_file(file_from, file_to):
+    try:
+        log('#### Copy File \'{}\' to \'{}\''.format(file_from, file_to))
+        if not os.path.exists(file_to):
+            shutil.copy2(file_from, file_to)
+        else:
+            log('######## File \'{}\' Already Exist'.format(file_to))
+            file_to = '{}_copy.{}'.format(file_to.rsplit('.', maxsplit = 1)[0], file_to.rsplit('.', maxsplit = 1)[1])
+            log('######## Copy File \'{}\' to \'{}\''.format(file_from, file_to))
+    except:
+        log('############ Copy File \'{}\' to \'{}\' Error'.format(file_from, file_to))
+        log(traceback.format_exc())
+
+# directory copier
+def copy_dir(dir_from, dir_to):
+    try:
+        log('#### Copy Direcotry \'{}\' to \'{}\''.format(dir_from, dir_to))
+        if not os.path.exists(dir_to):
+            shutil.copytree(dir_from, dir_to, dirs_exist_ok = True)
+        else:
+            log('######## Direcotry \'{}\' Already Exist'.format(dir_to))
+    except:
+        log('############ Copy Direcotry \'{}\' to \'{}\' Error'.format(dir_from, dir_to))
+        log(traceback.format_exc())
+
+# file or directory mover
+def move(fd_from, fd_to):
+    try:
+        log('#### Move \'{}\' to \'{}\''.format(fd_from, fd_to))
+        if not os.path.exists(fd_to):
+            shutil.move(fd_from, fd_to)
+        else:
+            log('######## \'{}\' Already Exist'.format(fd_to))
+            fd_to = '{}_copy.{}'.format(fd_to.rsplit('.', maxsplit = 1)[0], fd_to.rsplit('.', maxsplit = 1)[1])
+            log('######## Move \'{}\' to \'{}\''.format(fd_from, fd_to))
+    except:
+        log('############ Move \'{}\' to \'{}\' Error'.format(fd_from, fd_to))
+        log(traceback.format_exc())
+        
+# file remover
+def remove_file(path):
+    try:
+        log('#### Remove File \'{}\''.format(path))
+        if os.path.exists(path):
+            os.remove(path)
+        else:
+            log('######## No File \'{}\''.format(path))            
+    except:
+        log('############ Remove File \'{}\' Error'.format(path))
+        log(traceback.format_exc())
+
+# directory remover
+def remove_dir(path):
+    try:
+        log('#### Remove Directory \'{}\''.format(path))
+        if os.path.exists(path):
+            shutil.rmtree(path)
+        else:
+            log('######## No Directory \'{}\''.format(path))     
+    except:
+        log('############ Remove Directory \'{}\' Error'.format(path))
+        log(traceback.format_exc())
+
+# file or directory renamer
+def rename(fd_from, fd_to):
+    try:
+        log('#### Rename \'{}\' to \'{}\''.format(fd_from, fd_to))
+        if os.path.exists(fd_from):
+            os.rename(fd_from, fd_to)
+        else:
+            log('######## No \'{}\''.format(fd_from))     
+    except:
+        log('############ Rename \'{}\' to \'{}\' Error'.format(fd_from, fd_to))
+        log(traceback.format_exc())
+
+# file size collector input list output dataframe
+def get_size_of_file(path_list):
+    try:
+        log('#### Get File Size')
+        
+        # define dataframe
+        df = pd.DataFrame([], columns = ['file_path', 'byte'])
+        df['file_path'] = path_list
+        
+        for idx, path in enumerate(path_list):
+            try:
+                if os.path.exists(path):
+                    file_size = os.path.getsize(path)
+                    log('######## #{} File \'{}\' Size : {} bytes'.format(idx, path, file_size))
+                    df.loc[idx, 'byte'] = file_size
+                else:
+                    log('######## #{} No File \'{}\''.format(idx, path))
+            except:
+                log('######## #{} Get File Size of \'{}\' Error'.format(idx, path))
+                log(traceback.format_exc())
+        
+        return df
+    except:
+        log('############ Get File Size Error')
+        log(traceback.format_exc())
+
+''' file & directory controller '''
