@@ -6,7 +6,6 @@
 ''' install '''
 
 ''' import '''
-import sys
 import python_modules as pm
 import logging
 from logging.config import dictConfig
@@ -48,8 +47,8 @@ def main():
     try:
         pm.script_start()
     except:
-        log('######## Main Funtion Error')
-        log('######## {}'.format(traceback.format_exc()))
+        log('############ Main Funtion Error')
+        log(traceback.format_exc())
     
 ''' functions '''
 
@@ -64,6 +63,6 @@ if __name__ == '__main__':
 
     ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
     
-    log('#### ================================================')
+    log('==========================================================================================')
     log('#### Run Time {}'.format(str(datetime.datetime.now() - start_time)))
-    log('#### ================================================')
+    log('==========================================================================================')
