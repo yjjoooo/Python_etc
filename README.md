@@ -5,6 +5,6 @@ Script List made by yong-jun jo
 
     - python_modules.py     : useful python modules
     
-    - datetime_modules.py     : useful datetime modules
+    - datetime_modules.py   : useful datetime modules
 
-    - database_modules.py     : useful database modules
+    - database_modules.py   : useful database modules
