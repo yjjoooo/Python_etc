@@ -18,37 +18,40 @@ script_abs_path, script_name = os.path.split(__file__)
 
 pm.create_dir(os.path.join(script_abs_path, 'logs'))
 
+dictConfig({
+    'version' : 1,
+    'formatters' : {
+        'default' : {
+            'format' : '[%(asctime)s] %(levelname)7s --- %(message)s',
+        },
+    },
+    'handlers' : {
+        'file' : {
+            'class' : 'logging.FileHandler',
+            'level' : 'DEBUG',
+            'formatter' : 'default',
+            'filename' : os.path.join(script_abs_path, 'logs', '{}_{}.log'.format(script_name.rsplit('.', maxsplit = 1)[0], datetime.datetime.now().strftime('%Y%m%d'))),
+        },
+    },
+    'root' : {
+        'level' : 'DEBUG',
+        'handlers' : ['file']
+    }
+})
+
 def log(msg):
     logging.info(msg)
 
-dictConfig({
-    'version': 1,
-    'formatters': {
-        'default': {
-            'format': '[%(asctime)s] %(levelname)s --- %(message)s',
-        }
-    },
-    'handlers': {
-        'file': {
-            'level': 'INFO',
-            'class': 'logging.FileHandler',
-            'filename': os.path.join(script_abs_path, 'logs', '{}_{}.log'.format(script_name.rsplit('.', maxsplit = 1)[0], datetime.datetime.now().strftime('%Y%m%d'))),
-            'formatter': 'default',
-        },
-    },
-    'root': {
-        'level': 'INFO',
-        'handlers': ['file']
-    }
-})
+def log_err(msg):
+    logging.error(msg)
 
 ''' main function'''
 def main():
     try:
         pm.script_start()
     except:
-        log('############ Main Funtion Error')
-        log(traceback.format_exc())
+        log_err('############ Main Funtion Error')
+        log_err(traceback.format_exc())
     
 ''' functions '''
 

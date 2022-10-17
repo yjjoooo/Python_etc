@@ -10,6 +10,12 @@ import pandas as pd
 def log(msg):
     logging.info(msg)
 
+def log_warn(msg):
+    logging.warning(msg)
+
+def log_err(msg):
+    logging.error(msg)
+
 # script start logger
 def script_start():
     log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
@@ -50,9 +56,11 @@ def read_file_list(path):
 
         log('############ Path \'{}\' File Count : {}'.format(path, len(file_list)))
         return file_list
+    except RuntimeWarning as w:
+        log_warn(w)
     except:
-        log('############ Read Path \'{}\' Error'.format(path))
-        log(traceback.format_exc())
+        log_err('############ Read Path \'{}\' Error'.format(path))
+        log_err(traceback.format_exc())
         
 # directory creater
 def create_dir(path):
@@ -62,9 +70,11 @@ def create_dir(path):
             os.makedirs(path)
         else:
             log('#### Directory \'{}\' Already Exist'.format(path))
+    except RuntimeWarning as w:
+        log_warn(w)
     except:
-        log('############ Create Directory \'{}\' Error'.format(path))
-        log(traceback.format_exc())
+        log_err('############ Create Directory \'{}\' Error'.format(path))
+        log_err(traceback.format_exc())
         
 # file copier
 def copy_file(file_from, file_to):
@@ -76,9 +86,11 @@ def copy_file(file_from, file_to):
             log('######## File \'{}\' Already Exist'.format(file_to))
             file_to = '{}_copy.{}'.format(file_to.rsplit('.', maxsplit = 1)[0], file_to.rsplit('.', maxsplit = 1)[1])
             log('######## Copy File \'{}\' to \'{}\''.format(file_from, file_to))
+    except RuntimeWarning as w:
+        log_warn(w)
     except:
-        log('############ Copy File \'{}\' to \'{}\' Error'.format(file_from, file_to))
-        log(traceback.format_exc())
+        log_err('############ Copy File \'{}\' to \'{}\' Error'.format(file_from, file_to))
+        log_err(traceback.format_exc())
 
 # directory copier
 def copy_dir(dir_from, dir_to):
@@ -88,9 +100,11 @@ def copy_dir(dir_from, dir_to):
             shutil.copytree(dir_from, dir_to, dirs_exist_ok = True)
         else:
             log('######## Direcotry \'{}\' Already Exist'.format(dir_to))
+    except RuntimeWarning as w:
+        log_warn(w)
     except:
-        log('############ Copy Direcotry \'{}\' to \'{}\' Error'.format(dir_from, dir_to))
-        log(traceback.format_exc())
+        log_err('############ Copy Direcotry \'{}\' to \'{}\' Error'.format(dir_from, dir_to))
+        log_err(traceback.format_exc())
 
 # file or directory mover
 def move(fd_from, fd_to):
@@ -102,9 +116,11 @@ def move(fd_from, fd_to):
             log('######## \'{}\' Already Exist'.format(fd_to))
             fd_to = '{}_copy.{}'.format(fd_to.rsplit('.', maxsplit = 1)[0], fd_to.rsplit('.', maxsplit = 1)[1])
             log('######## Move \'{}\' to \'{}\''.format(fd_from, fd_to))
+    except RuntimeWarning as w:
+        log_warn(w)
     except:
-        log('############ Move \'{}\' to \'{}\' Error'.format(fd_from, fd_to))
-        log(traceback.format_exc())
+        log_err('############ Move \'{}\' to \'{}\' Error'.format(fd_from, fd_to))
+        log_err(traceback.format_exc())
         
 # file remover
 def remove_file(path):
@@ -113,10 +129,12 @@ def remove_file(path):
         if os.path.exists(path):
             os.remove(path)
         else:
-            log('######## No File \'{}\''.format(path))            
+            log('######## No File \'{}\''.format(path))
+    except RuntimeWarning as w:
+        log_warn(w)
     except:
-        log('############ Remove File \'{}\' Error'.format(path))
-        log(traceback.format_exc())
+        log_err('############ Remove File \'{}\' Error'.format(path))
+        log_err(traceback.format_exc())
 
 # directory remover
 def remove_dir(path):
@@ -125,10 +143,12 @@ def remove_dir(path):
         if os.path.exists(path):
             shutil.rmtree(path)
         else:
-            log('######## No Directory \'{}\''.format(path))     
+            log('######## No Directory \'{}\''.format(path))
+    except RuntimeWarning as w:
+        log_warn(w)
     except:
-        log('############ Remove Directory \'{}\' Error'.format(path))
-        log(traceback.format_exc())
+        log_err('############ Remove Directory \'{}\' Error'.format(path))
+        log_err(traceback.format_exc())
 
 # file or directory renamer
 def rename(fd_from, fd_to):
@@ -137,10 +157,12 @@ def rename(fd_from, fd_to):
         if os.path.exists(fd_from):
             os.rename(fd_from, fd_to)
         else:
-            log('######## No \'{}\''.format(fd_from))     
+            log('######## No \'{}\''.format(fd_from))
+    except RuntimeWarning as w:
+        log_warn(w)
     except:
-        log('############ Rename \'{}\' to \'{}\' Error'.format(fd_from, fd_to))
-        log(traceback.format_exc())
+        log_err('############ Rename \'{}\' to \'{}\' Error'.format(fd_from, fd_to))
+        log_err(traceback.format_exc())
 
 # file size collector input list output dataframe
 def get_size_of_file(path_list):
@@ -164,8 +186,10 @@ def get_size_of_file(path_list):
                 log(traceback.format_exc())
         
         return df
+    except RuntimeWarning as w:
+        log_warn(w)
     except:
-        log('############ Get File Size Error')
-        log(traceback.format_exc())
+        log_err('############ Get File Size Error')
+        log_err(traceback.format_exc())
 
 ''' file & directory controller '''
