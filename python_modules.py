@@ -40,7 +40,7 @@ def script_start():
 
 ''' file & directory controller '''
 
-# file reader as list output full path
+# file reader input path return list
 def read_file_list(path):
     try:
         log('#### Read Path \'{}\''.format(path))
@@ -164,7 +164,7 @@ def rename(fd_from, fd_to):
         log_err('############ Rename \'{}\' to \'{}\' Error'.format(fd_from, fd_to))
         log_err(traceback.format_exc())
 
-# file size collector input list output dataframe
+# file size collector input list return dataframe
 def get_size_of_file(path_list):
     try:
         log('#### Get File Size')
