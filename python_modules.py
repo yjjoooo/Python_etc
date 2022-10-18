@@ -191,5 +191,3 @@ def get_size_of_file(path_list):
     except:
         log_err('############ Get File Size Error')
         log_err(traceback.format_exc())
-
-''' file & directory controller '''
