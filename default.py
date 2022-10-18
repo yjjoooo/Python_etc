@@ -6,7 +6,7 @@
 ''' install '''
 
 ''' import '''
-import python_modules as pm
+import python_modules as pym
 import logging
 from logging.config import dictConfig
 import datetime
@@ -16,7 +16,7 @@ import os
 ''' log '''
 script_abs_path, script_name = os.path.split(__file__)
 
-pm.create_dir(os.path.join(script_abs_path, 'logs'))
+pym.create_dir(os.path.join(script_abs_path, 'logs'))
 
 dictConfig({
     'version' : 1,
@@ -48,7 +48,7 @@ def log_err(msg):
 ''' main function'''
 def main():
     try:
-        pm.script_start()
+        pym.script_start()
     except:
         log_err('############ Main Funtion Error')
         log_err(traceback.format_exc())
