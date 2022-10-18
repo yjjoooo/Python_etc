@@ -40,7 +40,7 @@ def select_table(engine, table_name):
         log_err('############ Read Table \"{}\" Error'.format(table_name))
         log_err(traceback.format_exc())
 
-# dataFrame inserter to database
+# dataframe inserter to database
 def insert_to_table(engine, table_name, df):
     try:
         log('#### Insert To Table \"{}\"'.format(table_name))
