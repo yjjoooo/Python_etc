@@ -17,7 +17,7 @@ Script List made by yong-jun jo
 
     - database_modules.py   # database engine creater
                             # table selector from database
-                            # dataFrame inserter to database
+                            # dataframe inserter to database
 
     - csv_modules.py        # csv reader (UP plz!)
                             # csv saver
