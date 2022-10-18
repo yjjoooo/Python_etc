@@ -40,7 +40,7 @@ def script_start():
 
 ''' file & directory controller '''
 
-# file reader input path return list
+# file list reader input path return list
 def read_file_list(path):
     try:
         log('#### Read Path \"{}\"'.format(path))
