@@ -1,4 +1,4 @@
-# Python_etc
+# Python
 Script List made by yong-jun jo
 
     - default.py            : default format python file with logging
