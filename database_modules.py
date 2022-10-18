@@ -16,7 +16,7 @@ def log_err(msg):
 # database engine creater
 def create_db_engine(db_info):
     try:
-        log('#### Create Database Engine {}'.format(db_info))
+        log('#### Create Database Engine \"{}\"'.format(db_info))
         return create_engine(db_info)
     except RuntimeWarning as w:
         log_warn(w)
@@ -27,7 +27,7 @@ def create_db_engine(db_info):
 # table selector from database
 def select_table(engine, table_name):
     try:
-        log('#### Select Table : {}'.format(table_name))
+        log('#### Select Table : \"{}\"'.format(table_name))
         df = pd.read_sql(
             sql = 'select * from {}'.format(table_name),
             con = engine,
@@ -37,13 +37,13 @@ def select_table(engine, table_name):
     except RuntimeWarning as w:
         log_warn(w)
     except:
-        log_err('############ Read Table : {} Error'.format(table_name))
+        log_err('############ Read Table \"{}\" Error'.format(table_name))
         log_err(traceback.format_exc())
 
 # dataFrame inserter to database
 def insert_to_table(engine, table_name, df):
     try:
-        log('#### Insert To Table : \'{}\''.format(table_name))
+        log('#### Insert To Table \"{}\"'.format(table_name))
         df.to_sql(
             name = table_name,
             con = engine,
@@ -53,5 +53,5 @@ def insert_to_table(engine, table_name, df):
     except RuntimeWarning as w:
         log_warn(w)
     except:
-        log_err('############ Insert To Table : {} Error'.format(table_name))
+        log_err('############ Insert To Table \"{}\" Error'.format(table_name))
         log_err(traceback.format_exc())
