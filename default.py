@@ -22,7 +22,7 @@ dictConfig({
     'version' : 1,
     'formatters' : {
         'default' : {
-            'format' : '[%(asctime)s] %(levelname)7s --- %(message)s',
+            'format' : '[%(asctime)s] %(levelname)7s --- %(lineno)6d : %(message)s',
         },
     },
     'handlers' : {

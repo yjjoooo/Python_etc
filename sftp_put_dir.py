@@ -25,7 +25,7 @@ dictConfig({
     'version' : 1,
     'formatters' : {
         'default' : {
-            'format' : '[%(asctime)s] %(levelname)7s --- %(message)s',
+            'format' : '[%(asctime)s] %(levelname)7s --- %(lineno)6d : %(message)s',
         },
     },
     'handlers' : {
@@ -58,19 +58,16 @@ def main():
         
         host = sys.argv[1]
         port = sys.argv[2]
-        
         transport = set_sftp_info(host, port)
         
         login_id = sys.argv[3]
         login_pw = sys.argv[4]
-        
         login_sftp(transport, login_id, login_pw)
         
         sftp = create_sftp_connection(transport)
         
         before_path = sys.argv[5]
         after_path = sys.argv[6]
-        
         sftp_put(sftp, before_path, after_path)
         
         sftp.close()
@@ -123,12 +120,17 @@ def create_sftp_connection(transport):
 # file putter
 def sftp_put(sftp, before_path, after_path):
     try:
+        log('#### SFTP Put \"{}\" to \"{}\"'.format(before_path, after_path))
         file_list = os.listdir(before_path)
         for file_name in file_list:
             before_file = os.path.join(before_path, file_name)
             after_file = os.path.join(after_path, file_name)
-            log('#### Put \"{}\" to \"{}\"'.format(before_file, after_file))
-            sftp.put(before_file, after_file)
+            try:
+                log('######## Put \"{}\" to \"{}\"'.format(before_file, after_file))
+                sftp.put(before_file, after_file)
+            except:
+                log_err('######## Put \"{}\" to \"{}\" Error'.format(before_file, after_file))
+                log_err(traceback.format_exc())
     except RuntimeWarning as w:
         log_warn(w)
     except:
