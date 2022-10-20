@@ -13,7 +13,7 @@ Script List made by yong-jun jo
                             # file or directory renamer
                             # file size collector input list return dataframe
     
-    - datetime_modules.py   # now formater input format return string
+    - datetime_modules.py   # now formatter input format return string
 
     - database_modules.py   # database engine creater
                             # table selector from database
