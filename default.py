@@ -39,25 +39,19 @@ dictConfig({
     }
 })
 
-def log(msg):
-    logging.info(msg)
-
-def log_err(msg):
-    logging.error(msg)
-
 ''' main function'''
 def main():
     try:
         pym.script_start()
     except:
-        log_err('############ Main Funtion Error')
-        log_err(traceback.format_exc())
+        logging.error('############ Main Funtion Error')
+        logging.error(traceback.format_exc())
     
 ''' functions '''
 
 ''' main '''
 if __name__ == '__main__':
-    # Calculate Run Time
+    # 런타임
     start_time = datetime.datetime.now()
 
     ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -66,6 +60,6 @@ if __name__ == '__main__':
 
     ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
     
-    log('==========================================================================================')
-    log('#### Run Time {}'.format(str(datetime.datetime.now() - start_time)))
-    log('==========================================================================================')
+    logging.info('==========================================================================================')
+    logging.info('#### Run Time {}'.format(str(datetime.datetime.now() - start_time)))
+    logging.info('==========================================================================================')

@@ -6,44 +6,34 @@ import sys
 import shutil
 import pandas as pd
 
-# logger
-def log(msg):
-    logging.info(msg)
-
-def log_warn(msg):
-    logging.warning(msg)
-
-def log_err(msg):
-    logging.error(msg)
-
-# script start logger
+# 스크립트 시작
 def script_start():
-    log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
-    log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
-    log('@@@@                                                                                  @@@@')
-    log('@@@@    ___            _     _                                      _     _           @@@@')
-    log('@@@@   / _ \          | |   | |                      _             (_)   (_)          @@@@')
-    log('@@@@  / /_\ \  _   _  | |_  | |__     ___    _ __   (_)   _   _     _     _    ___    @@@@')
-    log('@@@@  |  _  | | | | | | __| |  _ \   / _ \  |  __|       | | | |   | |   | |  / _ \   @@@@')
-    log('@@@@  | | | | | |_| | | |_  | | | | | (_) | | |      _   | |_| |   | |   | | | (_) |  @@@@')
-    log('@@@@  \_| |_/  \__ _|  \__| |_| |_|  \___/  |_|     (_)   \__  |   | |   | |  \___/   @@@@')
-    log('@@@@                                                       __/ |  _/ |  _/ |          @@@@')
-    log('@@@@                                                      |___/  |__/  |__/           @@@@')
-    log('@@@@                                                                                  @@@@')
-    log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
-    log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
-    log('==========================================================================================')
-    log('#### OS              : {}'.format(platform.platform()))
-    log('#### Python Version  : {}'.format(sys.version))
-    log('#### Process ID(PID) : {}'.format(os.getpid()))
-    log('==========================================================================================')
+    logging.info('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
+    logging.info('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
+    logging.info('@@@@                                                                                  @@@@')
+    logging.info('@@@@    ___            _     _                                      _     _           @@@@')
+    logging.info('@@@@   / _ \          | |   | |                      _             (_)   (_)          @@@@')
+    logging.info('@@@@  / /_\ \  _   _  | |_  | |__     ___    _ __   (_)   _   _     _     _    ___    @@@@')
+    logging.info('@@@@  |  _  | | | | | | __| |  _ \   / _ \  |  __|       | | | |   | |   | |  / _ \   @@@@')
+    logging.info('@@@@  | | | | | |_| | | |_  | | | | | (_) | | |      _   | |_| |   | |   | | | (_) |  @@@@')
+    logging.info('@@@@  \_| |_/  \__ _|  \__| |_| |_|  \___/  |_|     (_)   \__  |   | |   | |  \___/   @@@@')
+    logging.info('@@@@                                                       __/ |  _/ |  _/ |          @@@@')
+    logging.info('@@@@                                                      |___/  |__/  |__/           @@@@')
+    logging.info('@@@@                                                                                  @@@@')
+    logging.info('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
+    logging.info('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
+    logging.info('==========================================================================================')
+    logging.info('#### OS              : {}'.format(platform.platform()))
+    logging.info('#### Python Version  : {}'.format(sys.version))
+    logging.info('#### Process ID(PID) : {}'.format(os.getpid()))
+    logging.info('==========================================================================================')
 
 ''' file & directory controller '''
 
-# file list reader input path return list
+# 파일 리스트 호출
 def read_file_list(path):
     try:
-        log('#### Read Path \"{}\"'.format(path))
+        logging.info('#### Read Path \"{}\"'.format(path))
         file_list = list([])
         
         for dir_path, _, file_name in os.walk(path):
@@ -51,123 +41,123 @@ def read_file_list(path):
                 try:
                     file_list.append(os.path.abspath(os.path.join(dir_path, f)))
                 except:
-                    log('######## Read File \"{}\" Error'.format(file_name))
-                    log(traceback.format_exc())
+                    logging.info('######## Read File \"{}\" Error'.format(file_name))
+                    logging.info(traceback.format_exc())
 
-        log('############ Path \"{}\" File Count : {}'.format(path, len(file_list)))
+        logging.info('############ Path \"{}\" File Count : {}'.format(path, len(file_list)))
         return file_list
     except RuntimeWarning as w:
-        log_warn(w)
+        logging.warning(w)
     except:
-        log_err('############ Read Path \"{}\" Error'.format(path))
-        log_err(traceback.format_exc())
+        logging.error('############ Read Path \"{}\" Error'.format(path))
+        logging.error(traceback.format_exc())
         
-# directory creater
+# 디렉토리 생성
 def create_dir(path):
     try:
         if not os.path.exists(path):
-            log('#### Create Directory \"{}\"'.format(path))
+            logging.info('#### Create Directory \"{}\"'.format(path))
             os.makedirs(path)
         else:
-            log('#### Directory \"{}\" Already Exist'.format(path))
+            logging.info('#### Directory \"{}\" Already Exist'.format(path))
     except RuntimeWarning as w:
-        log_warn(w)
+        logging.warning(w)
     except:
-        log_err('############ Create Directory \"{}\" Error'.format(path))
-        log_err(traceback.format_exc())
+        logging.error('############ Create Directory \"{}\" Error'.format(path))
+        logging.error(traceback.format_exc())
         
-# file copier
+# 파일 복사 
 def copy_file(file_from, file_to):
     try:
-        log('#### Copy File \"{}\" to \"{}\"'.format(file_from, file_to))
+        logging.info('#### Copy File \"{}\" to \"{}\"'.format(file_from, file_to))
         if not os.path.exists(file_to):
             shutil.copy2(file_from, file_to)
         else:
-            log('######## File \"{}\" Already Exist'.format(file_to))
+            logging.info('######## File \"{}\" Already Exist'.format(file_to))
             file_to = '{}_copy.{}'.format(file_to.rsplit('.', maxsplit = 1)[0], file_to.rsplit('.', maxsplit = 1)[1])
-            log('######## Copy File \"{}\" to \"{}\"'.format(file_from, file_to))
+            logging.info('######## Copy File \"{}\" to \"{}\"'.format(file_from, file_to))
     except RuntimeWarning as w:
-        log_warn(w)
+        logging.warning(w)
     except:
-        log_err('############ Copy File \"{}\" to \"{}\" Error'.format(file_from, file_to))
-        log_err(traceback.format_exc())
+        logging.error('############ Copy File \"{}\" to \"{}\" Error'.format(file_from, file_to))
+        logging.error(traceback.format_exc())
 
-# directory copier
+# 폴더 복사
 def copy_dir(dir_from, dir_to):
     try:
-        log('#### Copy Direcotry \"{}\" to \"{}\"'.format(dir_from, dir_to))
+        logging.info('#### Copy Direcotry \"{}\" to \"{}\"'.format(dir_from, dir_to))
         if not os.path.exists(dir_to):
             shutil.copytree(dir_from, dir_to, dirs_exist_ok = True)
         else:
-            log('######## Direcotry \"{}\" Already Exist'.format(dir_to))
+            logging.info('######## Direcotry \"{}\" Already Exist'.format(dir_to))
     except RuntimeWarning as w:
-        log_warn(w)
+        logging.warning(w)
     except:
-        log_err('############ Copy Direcotry \"{}\" to \"{}\" Error'.format(dir_from, dir_to))
-        log_err(traceback.format_exc())
+        logging.error('############ Copy Direcotry \"{}\" to \"{}\" Error'.format(dir_from, dir_to))
+        logging.error(traceback.format_exc())
 
-# file or directory mover
+# 파일 or 폴더 이동
 def move(fd_from, fd_to):
     try:
-        log('#### Move \"{}\" to \"{}\"'.format(fd_from, fd_to))
+        logging.info('#### Move \"{}\" to \"{}\"'.format(fd_from, fd_to))
         if not os.path.exists(fd_to):
             shutil.move(fd_from, fd_to)
         else:
-            log('######## \"{}\" Already Exist'.format(fd_to))
+            logging.info('######## \"{}\" Already Exist'.format(fd_to))
             fd_to = '{}_copy.{}'.format(fd_to.rsplit('.', maxsplit = 1)[0], fd_to.rsplit('.', maxsplit = 1)[1])
-            log('######## Move \"{}\" to \"{}\"'.format(fd_from, fd_to))
+            logging.info('######## Move \"{}\" to \"{}\"'.format(fd_from, fd_to))
     except RuntimeWarning as w:
-        log_warn(w)
+        logging.warning(w)
     except:
-        log_err('############ Move \"{}\" to \"{}\" Error'.format(fd_from, fd_to))
-        log_err(traceback.format_exc())
+        logging.error('############ Move \"{}\" to \"{}\" Error'.format(fd_from, fd_to))
+        logging.error(traceback.format_exc())
         
-# file remover
+# 파일 삭제
 def remove_file(path):
     try:
-        log('#### Remove File \"{}\"'.format(path))
+        logging.info('#### Remove File \"{}\"'.format(path))
         if os.path.exists(path):
             os.remove(path)
         else:
-            log('######## No File \"{}\"'.format(path))
+            logging.info('######## No File \"{}\"'.format(path))
     except RuntimeWarning as w:
-        log_warn(w)
+        logging.warning(w)
     except:
-        log_err('############ Remove File \"{}\" Error'.format(path))
-        log_err(traceback.format_exc())
+        logging.error('############ Remove File \"{}\" Error'.format(path))
+        logging.error(traceback.format_exc())
 
-# directory remover
+# 폴더 삭제
 def remove_dir(path):
     try:
-        log('#### Remove Directory \"{}\"'.format(path))
+        logging.info('#### Remove Directory \"{}\"'.format(path))
         if os.path.exists(path):
             shutil.rmtree(path)
         else:
-            log('######## No Directory \"{}\"'.format(path))
+            logging.info('######## No Directory \"{}\"'.format(path))
     except RuntimeWarning as w:
-        log_warn(w)
+        logging.warning(w)
     except:
-        log_err('############ Remove Directory \"{}\" Error'.format(path))
-        log_err(traceback.format_exc())
+        logging.error('############ Remove Directory \"{}\" Error'.format(path))
+        logging.error(traceback.format_exc())
 
-# file or directory renamer
+# 파일 or 폴더 이름 변경
 def rename(fd_from, fd_to):
     try:
-        log('#### Rename \"{}\" to \"{}\"'.format(fd_from, fd_to))
+        logging.info('#### Rename \"{}\" to \"{}\"'.format(fd_from, fd_to))
         if os.path.exists(fd_from):
             os.rename(fd_from, fd_to)
         else:
-            log('######## No \"{}\"'.format(fd_from))
+            logging.info('######## No \"{}\"'.format(fd_from))
     except RuntimeWarning as w:
-        log_warn(w)
+        logging.warning(w)
     except:
-        log_err('############ Rename \"{}\" to \"{}\" Error'.format(fd_from, fd_to))
-        log_err(traceback.format_exc())
+        logging.error('############ Rename \"{}\" to \"{}\" Error'.format(fd_from, fd_to))
+        logging.error(traceback.format_exc())
 
-# file size collector input list return dataframe
+# 파일 사이즈 호출
 def get_size_of_file(path_list):
     try:
-        log('#### Get File Size')
+        logging.info('#### Get File Size')
         
         # define dataframe
         df = pd.DataFrame([], columns = ['file_path', 'byte'])
@@ -177,17 +167,17 @@ def get_size_of_file(path_list):
             try:
                 if os.path.exists(path):
                     file_size = os.path.getsize(path)
-                    log('######## #{} File \"{}\" Size : {} bytes'.format(idx, path, file_size))
+                    logging.info('######## #{} File \"{}\" Size : {} bytes'.format(idx, path, file_size))
                     df.loc[idx, 'byte'] = file_size
                 else:
-                    log('######## #{} No File \"{}\"'.format(idx, path))
+                    logging.info('######## #{} No File \"{}\"'.format(idx, path))
             except:
-                log('######## #{} Get File Size of \"{}\" Error'.format(idx, path))
-                log(traceback.format_exc())
+                logging.info('######## #{} Get File Size of \"{}\" Error'.format(idx, path))
+                logging.info(traceback.format_exc())
         
         return df
     except RuntimeWarning as w:
-        log_warn(w)
+        logging.warning(w)
     except:
-        log_err('############ Get File Size Error')
-        log_err(traceback.format_exc())
+        logging.error('############ Get File Size Error')
+        logging.error(traceback.format_exc())
