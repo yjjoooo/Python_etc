@@ -85,15 +85,15 @@ def copy_file(file_from, file_to):
 # 폴더 복사
 def copy_dir(dir_from, dir_to):
     try:
-        logging.info('#### Copy Direcotry \"{}\" to \"{}\"'.format(dir_from, dir_to))
+        logging.info('#### Copy Directory \"{}\" to \"{}\"'.format(dir_from, dir_to))
         if not os.path.exists(dir_to):
             shutil.copytree(dir_from, dir_to, dirs_exist_ok = True)
         else:
-            logging.info('######## Direcotry \"{}\" Already Exist'.format(dir_to))
+            logging.info('######## Directory \"{}\" Already Exist'.format(dir_to))
     except RuntimeWarning as w:
         logging.warning(w)
     except:
-        logging.error('############ Copy Direcotry \"{}\" to \"{}\" Error'.format(dir_from, dir_to))
+        logging.error('############ Copy Directory \"{}\" to \"{}\" Error'.format(dir_from, dir_to))
         logging.error(traceback.format_exc())
 
 # 파일 or 폴더 이동
